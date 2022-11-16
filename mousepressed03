@@ -1,0 +1,51 @@
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup(){
+    ofSetFrameRate(60);
+
+    ofSetBackgroundAuto(false);
+    //We still want to draw on a black background, so we need to draw
+    //the background before we do anything with brush
+    
+    ofBackground(0);
+}
+
+//--------------------------------------------------------------
+void ofApp::update(){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+
+    if(ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)){
+        int maxRadius = 100;// Increase for a wider brush
+        int radiusStepSize = 5;// Decrease for more circles (i.e. a more opaque brush)
+        int alpha = 3;// Increase for a more opaque brush
+        int maxOffsetDistance = 100; // Increase for a larger spread of circles
+            // draw smaller and smaller circles and layering (increasing) opaqueness
+
+        for (int radius=maxRadius; radius>0; radius-=radiusStepSize){
+
+        float angle = ofRandom(ofDegToRad(360.0));
+        float distance = ofRandom(maxOffsetDistance);
+        float xOffset = cos(angle) * distance;
+        float yOffset = sin(angle) * distance;
+        ofSetColor(255,alpha);
+        ofColor myAqua = ofColor::aqua;
+        ofColor myPurple = ofColor::plum;
+//        ofColor myOrange(255,132,0,alpha);
+//        ofColor myRed(255,6,0,alpha);
+        ofColor inBetween = myAqua.getLerped(myPurple, ofRandom(1.0));
+        ofSetColor(inBetween);
+        ofDrawCircle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset,radius);
+    }
+
+    if(ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)){
+        //If the right mouse button is pressed...
+        ofBackground(0);//draw a black background over the screen
+    }
+}
+
+}
